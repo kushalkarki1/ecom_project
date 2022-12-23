@@ -1,0 +1,29 @@
+{% extends 'base_site.html' %}
+
+{% load static %}
+
+{% block stylesheet %}
+{{block.super}}
+<link rel="stylesheet" href="{% static 'css/home.css' %}" />
+{% endblock stylesheet %}
+
+{% block maincontent %}
+    <h1>List of Products</h1>
+    <div class="row">
+        {% for product in products %}
+            <div class="col-md-4 col-lg-4">
+                <div class="card shadow mt-1 mb-2">
+                    <div class="card-header">
+                        <a class="text-decoration-none" href="{% url 'product:product_detail' product.id %}">{{ product.name }}</a>
+                    </div>
+                    <div class="card-body">
+                        <span>Rs. <del>{{ product.marked_price }}</del></span><br>
+                        <span>{{ product.discount }} %</span><br>
+                        <span>Rs. {{ product.display_price }}</span>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+
+{% endblock maincontent %}

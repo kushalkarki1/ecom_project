@@ -1,0 +1,16 @@
+{% extends 'base_site.html' %}
+
+{% block maincontent %}
+
+<h1>{{product.name}}</h1>
+{% if product.image %}
+<img src="{{product.image.url}}" />
+{% endif %}
+<p>
+    Rs. <del>{{product.marked_price}}</del>
+    <span>{{product.discount}}%</span>
+    <span>Rs.{{product.display_price}}</span>
+</p>
+<button class="btn btn-info">Add to Cart</button>
+
+{% endblock maincontent %}
