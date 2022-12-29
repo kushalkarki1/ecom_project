@@ -5,6 +5,7 @@ from product.views import (
     product_list_view,
     product_by_category_view,
     product_add_view,
+    product_edit_view,
 )
 
 app_name = "product"
@@ -22,5 +23,10 @@ urlpatterns = [
         "product-add/",
         product_add_view,
         name="product_add"
+    ),
+    path(
+        "product-edit/<int:productid>/",
+        product_edit_view,
+        name="product_edit"
     ),
 ]

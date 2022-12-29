@@ -3,14 +3,19 @@
 {% block maincontent %}
 
 <h1>{{product.name}}</h1>
-{% if product.image %}
-<img src="{{product.image.url}}" />
-{% endif %}
-<p>
-    Rs. <del>{{product.marked_price}}</del>
-    <span>{{product.discount}}%</span>
-    <span>Rs.{{product.display_price}}</span>
-</p>
-<button class="btn btn-info">Add to Cart</button>
-
+<div class="row">
+    <div class="col-md-6 col-lg-6">
+        {% if product.image %}
+            <img class="img-fluid" src="{{product.image.url}}" alt="" />
+        {% endif %}
+    </div>
+    <div class="col-md-6 col-lg-6">
+        <p>
+            Rs. <del>{{product.marked_price}}</del>
+            <span>{{product.discount}}%</span>
+            <span>Rs.{{product.display_price}}</span>
+        </p>
+        <button class="btn btn-info">Add to Cart</button>
+    </div>
+</div>
 {% endblock maincontent %}

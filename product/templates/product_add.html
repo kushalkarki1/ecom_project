@@ -1,8 +1,10 @@
 {% extends 'base_site.html' %}
 
 {% block maincontent %}
-<form method="" action="">
-    <input type="text" name="username" />
-    <input type="submit" name="submit" value="Submit"/>
-</form>
+<div class="mt-1 mb-5 pt-2 pb-2">
+    <form method="post" action="" enctype="multipart/form-data">{% csrf_token %}
+        {{ form.as_p }}
+        <input class="btn btn-primary float-end" type="submit" name="submit" value="Submit"/>
+    </form>
+</div>
 {% endblock maincontent %}
