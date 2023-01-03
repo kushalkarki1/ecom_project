@@ -10,12 +10,21 @@
         {% endif %}
     </div>
     <div class="col-md-6 col-lg-6">
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-success">{{message}}</div>
+            {% endfor %}
+        {% endif %}
         <p>
             Rs. <del>{{product.marked_price}}</del>
             <span>{{product.discount}}%</span>
             <span>Rs.{{product.display_price}}</span>
         </p>
-        <button class="btn btn-info">Add to Cart</button>
+        <form method="post" action="{% url 'shopping:add_to_cart' %}">
+            {% csrf_token %}
+            <input type="hidden" name="productid" value="{{product.id}}" />
+            <button type="submit" class="btn btn-info">Add to Cart</button>
+        </form>
     </div>
 </div>
 {% endblock maincontent %}

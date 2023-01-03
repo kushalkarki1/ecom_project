@@ -1,0 +1,22 @@
+{% extends 'base_site.html' %}
+
+{% block maincontent %}
+
+{% if carts %}
+    {% for cart in carts %}
+        <p>Cart: {{cart.uuid}}</p>
+        <p>My Cart Items</p>
+        {% for cartitem in cart.cartitem_set.all %}
+            <p>{{cartitem.product.name}}</p>
+        {% endfor %}
+    {% endfor %}
+{% else %}
+<h1>
+    Your Cart is Empty.
+    <a class="text-decoration-none" href="{% url 'product:product_list' %}">
+        Shop
+    </a> to Add Items here.
+</h1>
+{% endif %}
+
+{% endblock maincontent %}
