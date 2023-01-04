@@ -38,3 +38,10 @@ def add_to_cart(request):
     messages.add_message(request, messages.INFO, "Product added to cart successfully.")
     return HttpResponseRedirect(reverse("product:product_detail", args=(productid,)))
 
+
+def remove_cart_item(request):
+    cart_item_id = request.POST.get("cartitemid")
+    cart = get_object_or_404(CartItem, id=cart_item_id)
+    cart.delete()
+    messages.add_message(request, messages.INFO, "Item removed successfully")
+    return HttpResponseRedirect(reverse("shopping:mycart"))

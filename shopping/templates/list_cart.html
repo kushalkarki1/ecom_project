@@ -56,13 +56,13 @@
         </div>
         <div class="modal-body">
             Are you sure you want to remove this item ?
-            <form method="post" action="">{% csrf_token %}
-                <input type="text" name="cartitemid" id="_cartitemid" />
+            <form id="remove-item" method="post" action="{% url 'shopping:remove_cart_item' %}">{% csrf_token %}
+                <input type="hidden" name="cartitemid" id="_cartitemid" />
             </form>
         </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-danger">Yes</button>
+            <button id="remove-item-btn" type="submit" class="btn btn-danger">Yes</button>
         </div>
         </div>
     </div>
@@ -77,6 +77,11 @@
             let btn = evt.relatedTarget;
             let cartItem = document.getElementById("_cartitemid")
             cartItem.value = btn.dataset.cartitemid;
+        });
+
+        let removeBtn = document.getElementById("remove-item-btn");
+        removeBtn.addEventListener("click", function(){
+            document.getElementById("remove-item").submit();
         });
     </script>
 {% endblock script %}
