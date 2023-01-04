@@ -1,14 +1,41 @@
 {% extends 'base_site.html' %}
 
 {% block maincontent %}
-
+<div>
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-success">{{ message }}</div>
+        {% endfor %}
+    {% endif %}
+</div>
 {% if carts %}
     {% for cart in carts %}
         <p>Cart: {{cart.uuid}}</p>
         <p>My Cart Items</p>
-        {% for cartitem in cart.cartitem_set.all %}
-            <p>{{cartitem.product.name}}</p>
-        {% endfor %}
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Quantity</th>
+                    <th>Unit Price</th>
+                    <th>Total Price</th>
+                    <th>Remove</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for cartitem in cart.cartitem_set.all %}
+                    <tr>
+                        <td>{{ cartitem.product.name }}</td>
+                        <td>{{ cartitem.quantity }}</td>
+                        <td>{{ cartitem.unit_price }}</td>
+                        <td>{{ cartitem.total_price }}</td>
+                        <td>
+                            <button data-cartitemid="{{cartitem.id}}" data-bs-toggle="modal" data-bs-target="#exampleModal" class="btn btn-danger btn-sm">Remove</button>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
     {% endfor %}
 {% else %}
 <h1>
@@ -19,4 +46,37 @@
 </h1>
 {% endif %}
 
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h1 class="modal-title fs-5" id="exampleModalLabel">Remove Item</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            Are you sure you want to remove this item ?
+            <form method="post" action="">{% csrf_token %}
+                <input type="text" name="cartitemid" id="_cartitemid" />
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-danger">Yes</button>
+        </div>
+        </div>
+    </div>
+</div>
+
 {% endblock maincontent %}
+{% block script %}
+    {{ block.super }}
+    <script type="text/javascript">
+        let modal = document.getElementById("exampleModal");
+        modal.addEventListener("show.bs.modal", function(evt){
+            let btn = evt.relatedTarget;
+            let cartItem = document.getElementById("_cartitemid")
+            cartItem.value = btn.dataset.cartitemid;
+        });
+    </script>
+{% endblock script %}

@@ -25,10 +25,16 @@ def add_to_cart(request):
     )
     productid=request.POST.get("productid")
     product = get_object_or_404(Product, id=productid)
-    CartItem.objects.create(
+    cartitem, created = CartItem.objects.get_or_create(
         product=product,
-        unit_price=product.display_price,
-        cart=obj
+        defaults={
+            "unit_price": product.display_price,
+            "cart": obj
+        }
     )
+    if not created:
+        cartitem.quantity = cartitem.quantity + 1
+        cartitem.save()
     messages.add_message(request, messages.INFO, "Product added to cart successfully.")
     return HttpResponseRedirect(reverse("product:product_detail", args=(productid,)))
+
