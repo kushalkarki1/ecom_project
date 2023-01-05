@@ -146,3 +146,9 @@ MEDIA_ROOT = BASE_DIR / "mediafiles"
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = "useraccount.User"
+
+LOGIN_URL = "user:login"
+
+LOGIN_REDIRECT_URL = "product:product_list"
+
+LOGOUT_REDIRECT_URL = "user:login"

@@ -44,6 +44,18 @@
                 <li class="nav-item">
                     <a class="nav-link" aria-current="page" href="{% url 'shopping:mycart' %}">My Cart</a>
                 </li>
+
+                {% if not request.user.is_active %}
+                <li class="nav-item">
+                    <a class="nav-link" aria-current="page" href="{% url 'user:login' %}">Log In</a>
+                </li>
+                {% endif %}
+
+                {% if request.user.is_active %}
+                <li class="nav-item">
+                    <a class="nav-link" aria-current="page" href="{% url 'user:logout' %}">Log Out</a>
+                </li>
+                {% endif %}
             </ul>
             <form class="d-flex">
                 <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
